@@ -15,20 +15,15 @@ def DT(String):
     ''' Dynamic Truncation
     '''
     offset = int(String[-1:], 16)
-    print "offset", offset
     P = int(String[(offset * 2):((offset * 2) + 8)], 16) & 0x7fffffff
-    print "truncate", str(P)
     return str(P)
 
 
 def HOTP(K, C):
     ''' Generating an HOTP Value
     '''
-    print "K", str(K).encode('hex')
-    print "C", hex(C)
     C = struct.pack(b'>Q', C)
     hs = hmac.new(K, C, hashlib.sha1).hexdigest()
-    print "hmac", hs
     Sbits = DT(hs)
     return Sbits[-6:]
 
